@@ -20,166 +20,109 @@
 
 ---
 
-## 10.2 Critical User Flows
-
-### 📌 FT01 – Customer Login
-
-| ID   | Scenario |
-|------|---------|
-| FT01 | Login with valid credentials |
-
-**Steps:**
-- Access `/login`
-- Enter valid credentials (joao@lumefood.com / senha123)
-- Submit form
-
-**Expected Result:**
-- User is authenticated
-- Redirected to home page
+## 10.2 Functional Test Scenarios (Extended Coverage)
 
 ---
 
-### 📌 FT02 – Browse Restaurants
+### AUTH – SIGN UP
 
-| ID   | Scenario |
-|------|---------|
-| FT02 | View restaurant list |
-
-**Steps:**
-- Access `/restaurantes`
-- View available restaurants
-
-**Expected Result:**
-- Restaurants are listed correctly
-- Data matches API response
+| ID      | Feature | Scenario                          | Steps                                                                 | Expected Result                      | Severity |
+|---------|--------|----------------------------------|-----------------------------------------------------------------------|--------------------------------------|----------|
+| FT00    | Auth   | Valid user registration          | Access `/login` → Click "Sign Up" → Fill Name, Email, Password → Submit | User created successfully            | High     |
+| FT00-N1 | Auth   | Register with existing email     | Use already registered email                                          | Error message displayed              | High     |
+| FT00-N2 | Auth   | Register with invalid email      | Enter invalid email (ex: user@)                                       | Validation error                     | Medium   |
+| FT00-N3 | Auth   | Register with empty fields       | Submit without filling fields                                         | Required field validation            | High     |
+| FT00-N4 | Auth   | Register with weak password      | Enter short/invalid password                                          | Validation error                     | Medium   |
 
 ---
 
-### 📌 FT03 – View Restaurant Menu
+### AUTH – LOGIN
 
-| ID   | Scenario |
-|------|---------|
-| FT03 | Access restaurant details |
-
-**Steps:**
-- Click on a restaurant
-- Navigate to `/restaurante/:id`
-
-**Expected Result:**
-- Menu is displayed with categories
-- Products are visible
+| ID      | Feature | Scenario                      | Steps                                              | Expected Result       | Severity |
+|---------|--------|------------------------------|----------------------------------------------------|-----------------------|----------|
+| FT01    | Auth   | Login with valid credentials | Access `/login` → Enter valid credentials → Submit | User logged in        | High     |
+| FT01-N1 | Auth   | Invalid credentials          | Enter wrong password                               | Error displayed       | High     |
+| FT01-N2 | Auth   | Empty fields                 | Submit empty form                                  | Validation errors     | Medium   |
+| FT01-N3 | Auth   | Invalid email format         | Enter invalid email                                | Validation error      | Medium   |
 
 ---
 
-### 📌 FT04 – Add Item to Cart
+### CATALOG
 
-| ID   | Scenario |
-|------|---------|
-| FT04 | Add product to cart |
-
-**Steps:**
-- Access `/restaurantes`
-- Select restaurant
-- Click "Adicionar"
-
-**Expected Result:**
-- Item is added successfully
-- Cart updates correctly
+| ID      | Feature | Scenario                    | Steps        | Expected Result           | Severity |
+|---------|--------|-----------------------------|--------------|----------------------------|----------|
+| FT02    | Catalog| View restaurants            | Access `/`   | Restaurants listed         | Medium   |
+| FT02-N1 | Catalog| API failure on listing      | Simulate API | Error message shown        | Medium   |
 
 ---
 
-### 📌 FT05 – Update Cart
+### RESTAURANT MENU
 
-| ID   | Scenario |
-|------|---------|
-| FT05 | Update item quantity |
-
-**Steps:**
-- Access `/carrinho`
-- Increase/decrease quantity
-
-**Expected Result:**
-- Values updated correctly
-- Total recalculated
+| ID      | Feature | Scenario                    | Steps                          | Expected Result     | Severity |
+|---------|--------|-----------------------------|--------------------------------|----------------------|----------|
+| FT03    | Menu   | View restaurant menu        | Access `/restaurante/:id`      | Menu displayed       | Medium   |
+| FT03-N1 | Menu   | Invalid restaurant ID       | Access invalid ID              | Error or redirect    | Medium   |
 
 ---
 
-### 📌 FT06 – Apply Coupon
+### CART
 
-| ID   | Scenario |
-|------|---------|
-| FT06 | Apply discount coupon |
-
-**Steps:**
-- Go to `/checkout`
-- Apply coupon `LUMEFOOD10`
-
-**Expected Result:**
-- 10% discount applied
-- Total updated
+| ID      | Feature | Scenario                    | Steps                | Expected Result         | Severity |
+|---------|--------|-----------------------------|----------------------|--------------------------|----------|
+| FT04    | Cart   | Add item to cart            | Select item → Add    | Item added               | High     |
+| FT04-N1 | Cart   | Add unavailable product     | Add out-of-stock     | Error displayed          | High     |
+| FT05    | Cart   | Update quantity             | Change quantity      | Updated correctly        | High     |
+| FT05-N1 | Cart   | Invalid quantity            | Set 0 or negative    | Validation error         | High     |
 
 ---
 
-### 📌 FT07 – Checkout Flow
+### COUPON
 
-| ID   | Scenario |
-|------|---------|
-| FT07 | Complete order |
-
-**Steps:**
-- Proceed to `/checkout`
-- Fill required fields
-- Confirm order
-
-**Expected Result:**
-- Order created successfully
-- Redirect to `/pedidos`
+| ID      | Feature  | Scenario                  | Steps                    | Expected Result     | Severity |
+|---------|----------|---------------------------|---------------------------|----------------------|----------|
+| FT06    | Checkout | Apply valid coupon        | Apply LUMEFOOD10          | Discount applied     | High     |
+| FT06-N1 | Checkout | Invalid coupon            | Apply wrong code          | Error message        | Medium   |
+| FT06-N2 | Checkout | Expired coupon            | Apply expired code        | Error message        | Medium   |
 
 ---
 
-### 📌 FT08 – View Orders
+### CHECKOUT
 
-| ID   | Scenario |
-|------|---------|
-| FT08 | View order history |
-
-**Steps:**
-- Access `/pedidos`
-
-**Expected Result:**
-- Orders listed correctly
+| ID      | Feature  | Scenario                       | Steps                     | Expected Result        | Severity |
+|---------|----------|--------------------------------|----------------------------|------------------------|----------|
+| FT07    | Checkout | Complete order                 | Fill data → Confirm        | Order created          | High     |
+| FT07-N1 | Checkout | Empty cart                    | Proceed empty cart         | Blocked                | High     |
+| FT07-N2 | Checkout | Invalid payment               | Enter invalid data         | Error message          | High     |
+| FT07-N3 | Checkout | API failure                   | Simulate failure           | Graceful error         | High     |
 
 ---
 
-### 📌 FT09 – Admin Manage Menu
+### ORDERS
 
-| ID   | Scenario |
-|------|---------|
-| FT09 | Admin creates menu item |
-
-**Steps:**
-- Login as admin
-- Access `/admin/cardapio`
-- Create new item
-
-**Expected Result:**
-- Item appears in menu
+| ID      | Feature | Scenario            | Steps              | Expected Result     | Severity |
+|---------|--------|---------------------|---------------------|----------------------|----------|
+| FT08    | Orders | View orders         | Access `/pedidos`   | Orders listed        | Medium   |
+| FT08-N1 | Orders | No orders           | New user access     | Empty state shown    | Low      |
 
 ---
 
-### 📌 FT10 – Admin Manage Orders
+### ADMIN – MENU
 
-| ID   | Scenario |
-|------|---------|
-| FT10 | Update order status |
+| ID      | Feature | Scenario              | Steps                                | Expected Result   | Severity |
+|---------|--------|------------------------|----------------------------------------|--------------------|----------|
+| FT09    | Admin  | Create menu item       | `/admin/cardapio` → Create            | Item created       | High     |
+| FT09-N1 | Admin  | Invalid item data      | Missing fields                         | Validation error   | Medium   |
+| FT09-N2 | Admin  | Unauthorized access    | Non-admin access                       | Access denied      | High     |
 
-**Steps:**
-- Access `/admin/pedidos`
-- Change order status
+---
 
-**Expected Result:**
-- Status updated successfully
+### ADMIN – ORDERS
 
+| ID      | Feature | Scenario               | Steps                     | Expected Result   | Severity |
+|---------|--------|------------------------|----------------------------|--------------------|----------|
+| FT10    | Admin  | Update order status    | Change status              | Updated            | High     |
+| FT10-N1 | Admin  | Invalid status         | Send invalid status        | Error message      | Medium   |
+| FT10-N2 | Admin  | Unauthorized update    | Non-admin access           | Blocked            | High     |
 ---
 
 ## 11. API Test Scenarios
