@@ -1,23 +1,21 @@
----
-
 # 10. Functional Test Scenarios (User Flows)
 
 ## 10.1 Test Data
 
-### 👤 Customer Users
+### Customer Users
 | Email | Password | Name |
 |------|----------|------|
 | joao@lumefood.com | senha123 | João Silva |
 | maria@lumefood.com | senha123 | Maria Santos |
 | pedro@lumefood.com | senha123 | Pedro Oliveira |
 
-### 👨‍🍳 Admin Users
+### Admin Users
 | Email | Password | Restaurant |
 |------|----------|------------|
 | admin.pizzaria@lumefood.com | admin123 | Pizzaria do Chef |
 | admin.burguer@lumefood.com | admin123 | Burguer King Premium |
 
-### 🎟️ Coupon
+### Coupon
 - Code: **LUMEFOOD10** (10% discount)
 
 ---
